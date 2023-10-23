@@ -27,8 +27,8 @@ class Air_quality:
 
                     
                     self.responce = requests.get(self.url)
-                    with open('D:\Projects\AQI\data.json','w') as data_file:
-                             data_file.write(str(self.responce.text))
+              #       with open('D:\Projects\AQI\data.json','w') as data_file:
+              #                data_file.write(str(self.responce.text))
                     self.json_response()
                except ValueError as err:
                       self.audio_run(err)
