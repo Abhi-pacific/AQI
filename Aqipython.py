@@ -1,5 +1,5 @@
 #import pyttsx3 and request library
-import pyttsx3,requests,time
+import pyttsx3,requests
 from matplotlib import pyplot as plt
 engine = pyttsx3.init()
 
