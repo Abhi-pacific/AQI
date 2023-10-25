@@ -42,7 +42,6 @@ class Air_quality:
                     # AQI 
                     self.aqi = self.json_data['data']['aqi']
                     self.details = self.json_data['data']['city']['name']
-                    self.img = self.json_data["data"]["attributions"][0]["logo"]
                     self.audio_run(f'The air quality index of {self.city_name} is {self.aqi}')
                     print(f'The AQI is {self.aqi} pm2.5')
                     print(f'{self.details}')
@@ -55,10 +54,13 @@ class Air_quality:
                          print(f'The AQI is {self.pm} pm10')
                     except:
                            pass
-                         # Ozone 
-                    self.o3 = self.json_data['data']['iaqi']['o3']['v']
-                    self.audio_run(f'The o3 levels are {self.o3}')
-                    print(f'The o3 levels are {self.o3}')
+                    try:
+                            # Ozone
+                     self.o3 = self.json_data['data']['iaqi']['o3']['v']
+                     self.audio_run(f'The o3 levels are {self.o3}')
+                     print(f'The o3 levels are {self.o3}')
+                    except:
+                          self.audio_run(f'Real time o3 levels are not avilable for this city')
                except TypeError or ValueError as err1:
                       self.audio_run(f'Somthing went wrong')
                       print(err1)
@@ -95,36 +97,42 @@ class Processing_data(Air_quality):
           self.graph()
 
      def graph(self):
+            try:
+              # Graph for air quality monitoring pm25
+              self.audio_run('Presenting graph for forecast analysis of Air Quality index data')
+              aqi_data = self.json_data["data"]["forecast"]["daily"]["pm25"]
+              # Extract the days and average AQI values
+              days = [item["day"] for item in aqi_data]
+              avg_aqi_values = [item["avg"] for item in aqi_data]
+              # Plot the data
+              plt.plot(days, avg_aqi_values)
+              plt.xlabel('Day')
+              plt.ylabel('Average AQI')
+              plt.title('Average AQI over Time')
+              # Rotate x-axis labels
+              plt.xticks(rotation=45)
+              plt.show()   
+            except:
+                  pass
             
-            # Graph for air quality monitoring pm25
-            self.audio_run('Presenting graph for forecast analysis of Air Quality index data')
-            aqi_data = self.json_data["data"]["forecast"]["daily"]["pm25"]
-            # Extract the days and average AQI values
-            days = [item["day"] for item in aqi_data]
-            avg_aqi_values = [item["avg"] for item in aqi_data]
-            # Plot the data
-            plt.plot(days, avg_aqi_values)
-            plt.xlabel('Day')
-            plt.ylabel('Average AQI')
-            plt.title('Average AQI over Time')
-            # Rotate x-axis labels
-            plt.xticks(rotation=45)
-            plt.show()   
-
-            # Graph for ozone monitoring o3
-            self.audio_run('Presenting graph for forecast analysis of Ozonel data')
-            o3_data = self.json_data["data"]["forecast"]["daily"]["o3"]
-            # Extract the days and average AQI values
-            days = [item["day"] for item in o3_data]
-            avg_o3_values = [item["avg"] for item in o3_data]
-            # Plot the data
-            plt.plot(days, avg_o3_values)
-            plt.xlabel('Day')
-            plt.ylabel('Average O3 level')
-            plt.title('Average O3 levels over Time')
-            # Rotate x-axis labels
-            plt.xticks(rotation=45)
-            plt.show()   
+            try:
+              # Graph for ozone monitoring o3
+              self.audio_run('Presenting graph for forecast analysis of Ozonel data')
+              o3_data = self.json_data["data"]["forecast"]["daily"]["o3"]
+              # Extract the days and average AQI values
+              days = [item["day"] for item in o3_data]
+              avg_o3_values = [item["avg"] for item in o3_data]
+              # Plot the data
+              plt.plot(days, avg_o3_values)
+              plt.xlabel('Day')
+              plt.ylabel('Average O3 level')
+              plt.title('Average O3 levels over Time')
+              # Rotate x-axis labels
+              plt.xticks(rotation=45)
+              plt.show()   
+            except:
+                  pass
+                  
 
 
               
