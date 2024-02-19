@@ -36,7 +36,7 @@ Follow the audio prompts and screen outputs to interact with the application.
 Key Files:
 
 main.py: The main Python script for the application.
-README.md: This file (provides an overview of the project).
+README.MD: This file (provides an overview of the project).
 Additional Notes:
 
 The application currently supports checking air quality for a single city at a time.
